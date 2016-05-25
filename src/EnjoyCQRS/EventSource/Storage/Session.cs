@@ -104,7 +104,7 @@ namespace EnjoyCQRS.EventSource.Storage
 
         private void LoadAggregate<TAggregate>(TAggregate aggregate, IEnumerable<IDomainEvent> events) where TAggregate : Aggregate
         {
-            aggregate.LoadFromHistory(events);
+            aggregate.LoadFromHistory(new CommitedDomainEvents(events));
         }
 
         /// <summary>
@@ -150,16 +150,18 @@ namespace EnjoyCQRS.EventSource.Storage
             {
                 foreach (var aggregate in _aggregates)
                 {
-                    var changes = aggregate.UncommitedEvents.ToList();
+                    var aggregateMetadata = new AggregateMetadata(aggregate.Id, aggregate.GetType());
+
+                    var events = new UncommitedDomainEvents(aggregateMetadata, aggregate.UncommitedEvents.ToList());
 
                     if (_snapshotStrategy.ShouldMakeSnapshot(aggregate))
                     {
                         await TakeSnapshot(aggregate).ConfigureAwait(false);
                     }
                     
-                    await _eventStore.SaveAsync(changes).ConfigureAwait(false);
+                    await _eventStore.SaveAsync(events).ConfigureAwait(false);
 
-                    await _eventPublisher.PublishAsync<IDomainEvent>(changes).ConfigureAwait(false);
+                    await _eventPublisher.PublishAsync<IDomainEvent>(events).ConfigureAwait(false);
 
                     aggregate.UpdateVersion(aggregate.EventVersion);
 

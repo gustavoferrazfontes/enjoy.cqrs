@@ -20,19 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using EnjoyCQRS.Events;
 
 namespace EnjoyCQRS.EventSource
 {
-    public interface IAggregate
+    public interface IDomainEventCollection : IEnumerable<IDomainEvent>
     {
-        Guid Id { get; }
-        int EventVersion { get; }
-        IReadOnlyCollection<IDomainEvent> UncommitedEvents { get; }
-        int Version { get; }
-        void ClearUncommitedEvents();
-        void LoadFromHistory(CommitedDomainEvents domainEvents);
     }
 }

@@ -1,6 +1,6 @@
-ï»¿// The MIT License (MIT)
+// The MIT License (MIT)
 // 
-// Copyright (c) 2016 Nelson CorrÃªa V. JÃºnior
+// Copyright (c) 2016 Nelson Corrêa V. Júnior
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,18 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using EnjoyCQRS.Events;
 
 namespace EnjoyCQRS.EventSource
 {
-    public interface IAggregate
+    public class AggregateMetadata
     {
-        Guid Id { get; }
-        int EventVersion { get; }
-        IReadOnlyCollection<IDomainEvent> UncommitedEvents { get; }
-        int Version { get; }
-        void ClearUncommitedEvents();
-        void LoadFromHistory(CommitedDomainEvents domainEvents);
+        public Guid Id { get; }
+        public Type Type { get; }
+
+        public AggregateMetadata(Guid id, Type type)
+        {
+            Id = id;
+            Type = type;
+        }
     }
 }

@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventSource\AggregateMetadata.cs" />
+    <Compile Include="EventSource\CommitedDomainEvents.cs" />
+    <Compile Include="EventSource\DomainEventCollection.cs" />
+    <Compile Include="EventSource\IDomainEventCollection.cs" />
+    <Compile Include="EventSource\UncommitedDomainEvents.cs" />
     <Compile Include="MessageBus\InProcess\EventPublisher.cs" />
     <Compile Include="MessageBus\IEventRouter.cs" />
     <Compile Include="EventSource\IAggregate.cs" />

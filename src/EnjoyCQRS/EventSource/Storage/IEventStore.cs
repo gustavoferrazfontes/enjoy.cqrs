@@ -57,7 +57,7 @@ namespace EnjoyCQRS.EventSource.Storage
         /// <summary>
         /// Save the events in Event Store.
         /// </summary>
-        /// <param name="events"></param>
-        Task SaveAsync(IEnumerable<IDomainEvent> events);
+        /// <param name="collection"></param>
+        Task SaveAsync(IDomainEventCollection collection);
     }
 }

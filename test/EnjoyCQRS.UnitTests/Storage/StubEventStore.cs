@@ -53,9 +53,9 @@ namespace EnjoyCQRS.UnitTests.Storage
             return Task.FromResult(Enumerable.Empty<IDomainEvent>());
         }
         
-        public Task SaveAsync(IEnumerable<IDomainEvent> events)
+        public Task SaveAsync(IDomainEventCollection collection)
         {
-            foreach (var @event in events)
+            foreach (var @event in collection)
             {
                 var aggregateId = @event.AggregateId;
 

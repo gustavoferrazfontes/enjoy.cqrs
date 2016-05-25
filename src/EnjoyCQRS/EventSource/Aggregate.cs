@@ -114,17 +114,17 @@ namespace EnjoyCQRS.EventSource
         /// <summary>
         /// Load the events in the Aggregate.
         /// </summary>
-        /// <param name="events"></param>
-        public void LoadFromHistory(IEnumerable<IDomainEvent> events)
+        /// <param name="domainEvents"></param>
+        public void LoadFromHistory(CommitedDomainEvents domainEvents)
         {
-            foreach (var @event in events)
+            foreach (var @event in domainEvents)
             {
                 ApplyEvent(@event, false);
             }
             
-            if (events.Any())
+            if (domainEvents.Any())
             {
-                UpdateVersion(events.Max(e => e.Version));
+                UpdateVersion(domainEvents.Max(e => e.Version));
             }
         }
 

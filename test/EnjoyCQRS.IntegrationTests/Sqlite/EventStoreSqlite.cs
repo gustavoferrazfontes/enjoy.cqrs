@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Runtime.Serialization.Formatters;
 using System.Threading.Tasks;
 using EnjoyCQRS.Events;
+using EnjoyCQRS.EventSource;
 using EnjoyCQRS.EventSource.Snapshots;
 using EnjoyCQRS.EventSource.Storage;
 using Newtonsoft.Json;
@@ -75,7 +76,7 @@ namespace EnjoyCQRS.IntegrationTests.Sqlite
             return events;
         }
         
-        public async Task SaveAsync(IEnumerable<IDomainEvent> events)
+        public async Task SaveAsync(IDomainEventCollection collection)
         {
             var command = Connection.CreateCommand();
             command.CommandText = "INSERT INTO Events (Id, AggregateId, Timestamp, EventTypeName, Body, Version) VALUES (@Id, @AggregateId, @Timestamp, @EventTypeName, @Body, @Version)";
@@ -90,7 +91,7 @@ namespace EnjoyCQRS.IntegrationTests.Sqlite
 
             using (command)
             {
-                foreach (var @event in events)
+                foreach (var @event in collection)
                 {
                     command.Parameters[0].Value = @event.Id;
                     command.Parameters[1].Value = @event.AggregateId;

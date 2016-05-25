@@ -43,7 +43,7 @@ namespace EnjoyCQRS.TestFramework
         {   
             CaughtException = new ThereWasNoExceptionButOneWasExpectedException();
             AggregateRoot = new TAggregateRoot();
-            AggregateRoot.LoadFromHistory(Given());
+            AggregateRoot.LoadFromHistory(new CommitedDomainEvents(Given()));
 
             try
             {

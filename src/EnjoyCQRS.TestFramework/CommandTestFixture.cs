@@ -56,7 +56,7 @@ namespace EnjoyCQRS.TestFramework
             _mocks = new Dictionary<Type, object>();
             CaughtException = new ThereWasNoExceptionButOneWasExpectedException();
             AggregateRoot = new TAggregateRoot();
-            AggregateRoot.LoadFromHistory(Given());
+            AggregateRoot.LoadFromHistory(new CommitedDomainEvents(Given()));
 
             CommandHandler = BuildHandler();
 
